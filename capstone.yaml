@@ -1,0 +1,33 @@
+track: "Backend AI Engineering"
+capstone: "Usage Metering & Billing Engine"
+intern: "Kunal Aggarwal"
+version: "1.0.0"
+date: "2026-10-18"
+difficulty: "Medium"
+status: "Completed"
+stack:
+  framework: "FastAPI / Python 3.12"
+  database: "SQLite (PostgreSQL Compatible Schema)"
+  billing: "Stripe Subscriptions (Test Mode + Deterministic Signature Verification)"
+  background: "Async Usage Rollup & Reconciliation Worker"
+architecture:
+  layered: true
+  persistence_with_indexes: true
+  idempotency_key_enforced: true
+  zero_dollar_budget: true
+acceptance_probes:
+  - id: "idempotent_metering"
+    description: "Retried request with same idempotency key creates exactly one usage event"
+    verified: true
+  - id: "quota_enforcement"
+    description: "Requests over plan limit return 429/402 with detailed explanatory message"
+    verified: true
+  - id: "stripe_subscription_sync"
+    description: "Webhook verification flips tenant Free to Pro and adjusts quota boundaries"
+    verified: true
+  - id: "webhook_security"
+    description: "Forged webhook returns 400; replayed webhook event is processed exactly once"
+    verified: true
+  - id: "pinned_token_pricing"
+    description: "Correct money math for cached, regular, reasoning, and output tokens in micro-cents"
+    verified: true
